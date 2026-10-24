@@ -1,9 +1,9 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Side</title>
+  <title>Salmon.EXE Navigation</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap CDN Setup</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
+      margin: 0;
     }
 
     .nav-pills .nav-link:hover,
@@ -21,25 +22,32 @@
   </style>
 </head>
 <body>
-
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary min-vh-100" style="width: 280px;">
-  <a href="salmon_ui.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-    <span class="fs-4">Salmon.EXE</span>
-  </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="price_graph.html" class="nav-link active" aria-current="page">Price Graph</a>
-    </li>
-    <li>
-      <a href="quan_price.html" class="nav-link link-body-emphasis">Quantity Graph</a>
-    </li>
-    <li>
-      <a href="reccom_eng.html" class="nav-link link-body-emphasis">Recommendation Engine</a>
-    </li>
-  </ul>
-</div>
-</div>
-
+  <nav class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary min-vh-100">
+    <a href="salmon_ui.html" target="_parent" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <span class="fs-4">Salmon.EXE</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="price_graph.html" data-page="price_graph.html" target="_parent" class="nav-link link-body-emphasis">Price Graph</a>
+      </li>
+      <li>
+        <a href="quan_price.html" data-page="quan_price.html" target="_parent" class="nav-link link-body-emphasis">Quantity Graph</a>
+      </li>
+      <li>
+        <a href="reccom_eng.html" data-page="reccom_eng.html" target="_parent" class="nav-link link-body-emphasis">Recommendation Engine</a>
+      </li>
+    </ul>
+  </nav>
+<script>
+  const currentPage = new URLSearchParams(window.location.search).get('active');
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    if (link.dataset.page === currentPage) {
+      link.classList.add('active');
+      link.classList.remove('link-body-emphasis');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+</script>
 </body>
 </html>

@@ -1,53 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Reccomendation Engine</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/6/w3.css">
 <link rel="stylesheet" href="style.css">
+<style>
+  body { margin: 0; }
+  .page-layout { display: flex; min-height: 100vh; }
+  .sidebar-frame { width: 280px; min-height: 100vh; flex: 0 0 280px; border: 0; }
+  .page-content { flex: 1; min-width: 0; padding: 1.5rem; }
+</style>
 </head>
 <body>
+<div class="page-layout">
+  <iframe class="sidebar-frame" src="side.html?active=reccom_eng.html" title="Sidebar navigation"></iframe>
+  <main class="page-content">
+    <div id="engine">
+      <h1>Reccomendation Engine</h1>
 
-<div class="w3-sidebar w3-bar-block" style="width:20%">
-  <a href="price_graph.html" class="w3-bar-item w3-button w3-pale-red w3-hover-red">Price graph</a>
-  <a href="quan_price.html" class="w3-bar-item w3-button w3-pale-red w3-hover-red">Quantity Price</a>
-  <a href="reccom_eng.html" class="w3-bar-item w3-button w3-pale-red w3-hover-red">Recommendation Engine</a>
+      <div class="w3-card w3-container">
+        <h2>Inputs</h2>
+    
+        <label for="budget">Budget:</label>
+        <input type="text" id="budget" name="budget"><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="text" id="quantity" name="quantity"><br><br>
+
+        <label for="deadline">Deadline:</label>
+        <input type="text" id="deadline" name="deadline"><br><br>
+
+        <button onclick="generateRecommendation()">Calculate Best Option</button>
+
+        <h2>Results</h2>
+
+        <label for="when">When to buy:</label>
+        <input type="text" id="when" name="when"><br><br>
+
+        <label for="buy">Where to buy:</label>
+        <input type="text" id="buy" name="buy"><br><br>
+
+        <label for="Rquantity">Quantity:</label>
+        <input type="text" id="Rquantity" name="Rquantity"><br><br>
+
+      </div>
+    </div>
+  </main>
 </div>
-
-<div style="margin-left:20%">
-
-<div id="engine">
-  <h1>Reccomendation Engine</h1>
-
-  <div class="w3-card w3-container">
-    <h2>Inputs</h2>
-    
-    <label for="budget">Budget:</label>
-    <input type="text" id="budget" name="budget"><br><br>
-
-    <label for="quantity">Quantity:</label>
-    <input type="text" id="quantity" name="quantity"><br><br>
-
-    <label for="deadline">Deadline:</label>
-    <input type="text" id="deadline" name="deadline"><br><br>
-
-    <button onclick="generateRecommendation()">Calculate Best Option</button>
-
-    <h2>Results</h2>
-
-    <label for="when">When to buy:</label>
-    <input type="text" id="when" name="when"><br><br>
-
-    <label for="buy">Where to buy:</label>
-    <input type="text" id="buy" name="buy"><br><br>
-
-    <label for="Rquantity">Quantity:</label>
-    <input type="text" id="Rquantity" name="Rquantity"><br><br>
-
-
-  </div>
-    
-
-  </div>
-
 </body>
 </html>
