@@ -22,7 +22,7 @@ def optimize_forecast_json(forecast_json, maximum_budget, buyer_demand_kg, deadl
 def main():
     train_and_save_models()  # Saves both models with joblib.
     forecast_json = json.dumps(predict_next_year(), indent=2, allow_nan=False)
-    forecast_path = Path(__file__).resolve().with_name("forecast.json")
+    forecast_path = Path(__file__).resolve().parents[1] / "forecast.json"
     forecast_path.write_text(forecast_json + "\n", encoding="utf-8")
     print(forecast_json)
 

@@ -8,10 +8,21 @@
 from pathlib import Path
 from optimisation.optimise_engine import optimize_forecast_json
 
-schedule = optimize_forecast_json(
-    Path("forecast.json").read_text(encoding="utf-8"),
-    maximum_budget=10000.0,
-    buyer_demand_kg=100.0,
-    deadline_weeks=52,
-)
-print(schedule)
+def main():
+    forecast_path = Path(__file__).resolve().with_name("forecast.json")
+    try:
+        schedule = optimize_forecast_json(
+            forecast_path.read_text(encoding="utf-8"),
+            maximum_budget=78000.0,  # NOK
+            buyer_demand_kg=1000.0,
+            deadline_weeks=14,
+        )
+    except (ValueError, RuntimeError) as error:
+        print(f"Optimization failed for {forecast_path}: {error}")
+        return 1
+    print(schedule)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

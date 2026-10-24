@@ -1,3 +1,5 @@
+import math
+
 import pulp
 
 def optimize_purchasing_schedule(
@@ -23,6 +25,8 @@ def optimize_purchasing_schedule(
     Returns:
         list of tuples: [(when_to_buy, budget_allocated, quantity), ...]
     """
+    if isinstance(deadline_days, bool) or not isinstance(deadline_days, int):
+        raise ValueError("The deadline must be a positive integer number of time steps.")
     if deadline_days < 1 or deadline_days > min(len(supplier_offer_price_kg), len(supplier_saleable_stock_kg)):
         raise ValueError("The deadline must fit within the supplied price and stock data.")
     if period_labels is not None and len(period_labels) < deadline_days:
@@ -31,6 +35,41 @@ def optimize_purchasing_schedule(
     prices = supplier_offer_price_kg[:deadline_days]
     stocks = supplier_saleable_stock_kg[:deadline_days]
     days = range(len(prices))
+
+    for name, values in (
+        ("budget", [maximum_budget]), ("demand", [buyer_demand_kg]),
+        ("prices", prices), ("stock", stocks),
+    ):
+        if any(isinstance(value, bool) or not isinstance(value, (int, float))
+               or not math.isfinite(value) or value < 0 for value in values):
+            raise ValueError(f"All {name} values must be finite, non-negative numbers.")
+
+    # For divisible purchases, cheapest-first gives the exact minimum cost.
+    # Diagnose infeasible inputs before asking the solver for a schedule.
+    available = math.fsum(stocks)
+    if available < buyer_demand_kg:
+        raise ValueError(
+            f"Insufficient stock within the deadline: need {buyer_demand_kg:.2f} kg, "
+            f"available {available:.2f} kg (shortfall {buyer_demand_kg - available:.2f} kg)."
+        )
+    remaining = buyer_demand_kg
+    costs = []
+    for index in sorted(days, key=lambda index: prices[index]):
+        quantity = min(remaining, stocks[index])
+        costs.append(quantity * prices[index])
+        remaining -= quantity
+        if remaining <= 0:
+            break
+    minimum_cost = math.fsum(costs)
+    if minimum_cost > maximum_budget + 1e-7:
+        raise ValueError(
+            f"Insufficient budget: minimum cost is {minimum_cost:.2f}, "
+            f"budget is {maximum_budget:.2f} "
+            f"(shortfall {minimum_cost - maximum_budget:.2f}, in the input price currency; "
+            "NOK for forecast data)."
+        )
+    if buyer_demand_kg == 0:
+        return []
     
     # 1. Initialize the Optimization Problem (Minimize Total Acquisition Cost)
     model = pulp.LpProblem("Deterministic_Purchase_Optimization", pulp.LpMinimize)
@@ -72,7 +111,11 @@ def optimize_purchasing_schedule(
                 schedule.append((when_to_buy, round(budget_allocated, 2), round(qty, 2)))
         return schedule
     else:
-        raise ValueError("No feasible solution found. The budget may be too low, or supplier stock is insufficient to meet demand within the deadline.")
+        raise RuntimeError(
+            f"Solver returned {result.status.name} despite feasible inputs "
+            f"(minimum cost {minimum_cost:.2f}, budget {maximum_budget:.2f}). "
+            "Check the Python environment and installed PuLP/HiGHS versions."
+        )
 
 # --- Example Execution ---
 if __name__ == "__main__":
