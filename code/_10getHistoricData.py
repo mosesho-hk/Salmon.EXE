@@ -6,6 +6,18 @@ def getHistoricData(requestedDataType):
     workbook = load_workbook(dataSet)
     worksheet = workbook["Vekt"]
 
+    # Return the list of dates
+    if requestedDataType == "date":
+        dateList = []
+        for dateRow in worksheet:
+            date = dateRow[1].value
+            if date == None:
+                pass
+            else:
+                dateList.append(date)
+
+        return dateList
+    
 
     # return the list of prices in GBP, converted from NOK. Screw you, Norwegian Krone.
     if requestedDataType == "price":
