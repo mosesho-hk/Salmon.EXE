@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from optimisealgo import optimize_purchasing_schedule
+from optimisation.optimise_algo import optimize_purchasing_schedule
 from webui.models import train_and_save_models, predict_next_year
 
 
