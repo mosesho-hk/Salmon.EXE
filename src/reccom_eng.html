@@ -7,95 +7,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/6/w3.css">
-<link rel="stylesheet" href="style.css">
-<style>
-  body { margin: 0; }
-  #engine, #engine h1, #engine h2, #engine input, #engine button { font-family: 'Montserrat', sans-serif; }
-  #engine { max-width: 1050px; margin: 0 auto; color: #233044; }
-  #engine h1 { font-size: clamp(1.6rem, 3vw, 2.25rem); font-weight: 700; margin: 0 0 12px; }
-  #engine h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 20px; }
-  .page-intro { margin: 0 0 28px; }
-  #engine .w3-card { background-color: #fff; border: 1px solid #e1e5eb; border-radius: 16px; padding: 28px; box-shadow: 0 8px 28px rgba(35, 48, 68, 0.08); }
-  .input-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-  .input-field label { display: block; font-weight: 600; margin-bottom: 8px; }
-  #engine input { width: 100%; min-height: 48px; padding: 12px; border: 1px solid #8895a7; border-radius: 8px; background: #fff; color: #233044; }
-  #engine input::placeholder { color: #657185; }
-  .input-help { color: #526075; font-size: 0.85rem; line-height: 1.6; margin: 8px 0 0; }
-  #engine button { margin-top: 24px; padding: 13px 22px; border: 0; border-radius: 8px; background: #1756b9; color: #fff; font-weight: 600; cursor: pointer; }
-  #engine button:hover { background: #104493; }
-  #engine button:disabled { opacity: 0.65; cursor: wait; }
-  #engine input:focus-visible, #engine button:focus-visible { outline: 3px solid #1756b9; outline-offset: 3px; }
-  .results-section { margin-top: 28px; padding-top: 24px; border-top: 1px solid #e1e5eb; }
-  .results-section h2 { margin-bottom: 12px; }
-  #result-status { color: #526075; line-height: 1.6; }
-  #recommendation-results { overflow-x: auto; }
-  #engine th { background: #f3f6fa; }
-  #engine th, #engine td { padding: 12px; }
-  #recommendation-total { font-weight: 700; }
-  #recommendation-note { color: #526075; font-size: 0.85rem; }
-  .page-layout { display: flex; min-height: 100vh; }
-  .sidebar-frame { width: 280px; min-height: 100vh; flex: 0 0 280px; border: 0; }
-  .page-content { flex: 1; min-width: 0; padding: 1.5rem; }
-  @media (max-width: 1000px) { .input-grid { grid-template-columns: 1fr; gap: 20px; } }
-  @media (max-width: 640px) {
-    .page-layout { flex-direction: column; }
-    .sidebar-frame { width: 100%; min-height: 0; height: 260px; flex: 0 0 260px; }
-    .page-content { padding: 20px 16px; }
-    #engine .w3-card { padding: 20px; }
-    #engine button { width: 100%; }
-  }
-</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="page-layout">
-  <iframe class="sidebar-frame" src="side.html?active=reccom_eng.html" title="Sidebar navigation"></iframe>
-  <main class="page-content">
-    <div id="engine">
-      <h1>Recommendation Engine</h1>
-      <p class="page-intro">Plan your salmon purchase with a budget, quantity, and buying deadline.</p>
+<body class="bg-body-tertiary" style="--bs-body-font-family: 'Montserrat', sans-serif; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('salmon.png') center / cover no-repeat fixed;">
+<div class="container-fluid px-0"><div class="row g-0 min-vh-100">
+  <aside class="col-4 col-md-3 col-xl-2 sticky-top align-self-start vh-100 bg-body-tertiary"><iframe class="w-100 vh-100 border-0 d-block" src="side.html?active=reccom_eng.html" title="Sidebar navigation"></iframe></aside>
+  <main class="col-8 col-md-9 col-xl-10 p-3 p-lg-4">
+    <div id="engine" class="container-fluid px-0">
+      <h1 class="h2 fw-bold mb-3">Recommendation Engine</h1>
+      <p class="mb-4 text-body-secondary">Plan your salmon purchase with a budget, quantity, and buying deadline.</p>
 
-      <div class="w3-card w3-container">
-        <h2>Your requirements</h2>
+      <div class="card bg-white shadow-sm rounded-4 p-3 p-lg-4">
+        <h2 class="h5 fw-semibold mb-4">Your requirements</h2>
     
-        <div class="input-grid">
-          <div class="input-field">
-            <label for="budget">Budget (NOK)</label>
-            <input type="text" id="budget" name="budget" inputmode="decimal" placeholder="e.g. 50000" aria-describedby="budget-help">
-            <p class="input-help" id="budget-help">Enter the maximum amount you can spend in Norwegian kroner. Use a number of 0 or more, without currency symbols or commas.</p>
+        <div class="row g-4">
+          <div class="col-12 col-lg-4">
+            <label class="form-label fw-semibold" for="budget">Budget (NOK)</label>
+            <input class="form-control form-control-lg" type="text" id="budget" name="budget" inputmode="decimal" placeholder="e.g. 50000" aria-describedby="budget-help">
+            <p class="form-text mb-0" id="budget-help">Enter the maximum amount you can spend in Norwegian kroner. Use a number of 0 or more, without currency symbols or commas.</p>
           </div>
-          <div class="input-field">
-            <label for="quantity">Quantity (kg)</label>
-            <input type="text" id="quantity" name="quantity" inputmode="decimal" placeholder="e.g. 500" aria-describedby="quantity-help">
-            <p class="input-help" id="quantity-help">Enter how many kilograms of salmon you need. Use a number greater than 0; decimals such as 500.5 are accepted.</p>
+          <div class="col-12 col-lg-4">
+            <label class="form-label fw-semibold" for="quantity">Quantity (kg)</label>
+            <input class="form-control form-control-lg" type="text" id="quantity" name="quantity" inputmode="decimal" placeholder="e.g. 500" aria-describedby="quantity-help">
+            <p class="form-text mb-0" id="quantity-help">Enter how many kilograms of salmon you need. Use a number greater than 0; decimals such as 500.5 are accepted.</p>
           </div>
-          <div class="input-field">
-            <label for="deadline">Deadline (weeks)</label>
-            <input type="text" id="deadline" name="deadline" inputmode="numeric" placeholder="e.g. 4" aria-describedby="deadline-help">
-            <p class="input-help" id="deadline-help">Enter a whole number from 1 to 52, counted from the first forecast week. For example, 4 allows purchases within the first 4 forecast weeks.</p>
+          <div class="col-12 col-lg-4">
+            <label class="form-label fw-semibold" for="deadline">Deadline (weeks)</label>
+            <input class="form-control form-control-lg" type="text" id="deadline" name="deadline" inputmode="numeric" placeholder="e.g. 4" aria-describedby="deadline-help">
+            <p class="form-text mb-0" id="deadline-help">Enter a whole number from 1 to 52, counted from the first forecast week. For example, 4 allows purchases within the first 4 forecast weeks.</p>
           </div>
         </div>
 
-        <button onclick="generateRecommendation()">Calculate Best Option</button>
+        <button class="btn btn-primary align-self-start mt-4 px-4 py-3 fw-semibold" onclick="generateRecommendation()">Calculate Best Option</button>
 
-        <section class="results-section" aria-labelledby="results-heading">
-        <h2 id="results-heading">Your recommendation</h2>
+        <section class="mt-4 pt-4 border-top" aria-labelledby="results-heading">
+        <h2 class="h5 fw-semibold mb-3" id="results-heading">Your recommendation</h2>
 
-        <p id="result-status" role="status" aria-live="polite">Enter your requirements to calculate a recommendation.</p>
-        <div id="recommendation-results" hidden>
-          <table class="w3-table w3-bordered">
-            <thead><tr><th scope="col">When to buy</th><th scope="col">Buy price (NOK/kg)</th><th scope="col">Quantity (kg)</th></tr></thead>
+        <p class="text-body-secondary" id="result-status" role="status" aria-live="polite">Enter your requirements to calculate a recommendation.</p>
+        <div class="table-responsive" id="recommendation-results" hidden>
+          <table class="table table-bordered align-middle">
+            <thead class="table-light"><tr><th scope="col">When to buy</th><th scope="col">Buy price (NOK/kg)</th><th scope="col">Quantity (kg)</th></tr></thead>
             <tbody id="recommendation-rows"></tbody>
           </table>
-          <p id="recommendation-total"></p>
-          <p id="recommendation-note"></p>
+          <p class="fw-bold" id="recommendation-total"></p>
+          <p class="small text-body-secondary" id="recommendation-note"></p>
         </div>
         </section>
 
       </div>
     </div>
   </main>
-</div>
+</div></div>
 <script src="recommendation.js" defer></script>
 </body>
 </html>

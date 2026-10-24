@@ -94,5 +94,15 @@ def recommend_read_only(
     ))
 
 
+@app.get("/api/quantity-graph")
+def quantity_graph(start: date | None = None, end: date | None = None):
+    from webui.quantity_graph import build_quantity_graph
+
+    try:
+        return build_quantity_graph(ROOT, start, end)
+    except (OSError, KeyError, TypeError, ValueError) as error:
+        raise HTTPException(422, f"Unable to load quantity graph: {error}") from error
+
+
 # Serve the existing frontend and API on the same origin. Expose only src/.
 app.mount("/", StaticFiles(directory=ROOT / "src", html=True), name="frontend")
