@@ -13,9 +13,9 @@ def main():
     try:
         schedule = optimize_forecast_json(
             forecast_path.read_text(encoding="utf-8"),
-            maximum_budget=78000.0,  # NOK
-            buyer_demand_kg=1000.0,
-            deadline_weeks=14,
+            maximum_budget=1200.0,  # NOK
+            buyer_demand_kg=100.0,
+            deadline_weeks=3,
         )
     except (ValueError, RuntimeError) as error:
         print(f"Optimization failed for {forecast_path}: {error}")
