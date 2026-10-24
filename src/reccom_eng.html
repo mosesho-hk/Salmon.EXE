@@ -24,30 +24,32 @@
         <h2>Inputs</h2>
     
         <label for="budget">Budget:</label>
-        <input type="text" id="budget" name="budget"><br><br>
+        <input type="text" id="budget" name="budget" inputmode="decimal" title="Maximum budget in NOK" aria-label="Budget in NOK"><br><br>
 
         <label for="quantity">Quantity:</label>
-        <input type="text" id="quantity" name="quantity"><br><br>
+        <input type="text" id="quantity" name="quantity" inputmode="decimal" title="Required quantity in kilograms" aria-label="Quantity in kilograms"><br><br>
 
         <label for="deadline">Deadline:</label>
-        <input type="text" id="deadline" name="deadline"><br><br>
+        <input type="text" id="deadline" name="deadline" inputmode="numeric" title="Number of weeks from the first forecast week (1–52)" aria-label="Deadline in weeks"><br><br>
 
         <button onclick="generateRecommendation()">Calculate Best Option</button>
 
         <h2>Results</h2>
 
-        <label for="when">When to buy:</label>
-        <input type="text" id="when" name="when"><br><br>
-
-        <label for="buy">Where to buy:</label>
-        <input type="text" id="buy" name="buy"><br><br>
-
-        <label for="Rquantity">Quantity:</label>
-        <input type="text" id="Rquantity" name="Rquantity"><br><br>
+        <p id="result-status" role="status" aria-live="polite">Enter your requirements to calculate a recommendation.</p>
+        <div id="recommendation-results" hidden>
+          <table class="w3-table w3-bordered">
+            <thead><tr><th scope="col">When to buy</th><th scope="col">Buy price (NOK/kg)</th><th scope="col">Quantity (kg)</th></tr></thead>
+            <tbody id="recommendation-rows"></tbody>
+          </table>
+          <p id="recommendation-total"></p>
+          <p id="recommendation-note"></p>
+        </div>
 
       </div>
     </div>
   </main>
 </div>
+<script src="recommendation.js" defer></script>
 </body>
 </html>

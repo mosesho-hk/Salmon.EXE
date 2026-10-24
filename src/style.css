@@ -1,7 +1,9 @@
 body {
 
 
-    background-image: url('salmon.png');
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+        url('salmon.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
