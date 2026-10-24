@@ -5,3 +5,4 @@ openpyxl>=3.1,<4
 scikit-learn>=1.4,<2
 xgboost>=2,<4
 lightgbm>=4,<5
+pulp[highs]>=4.2,<5
