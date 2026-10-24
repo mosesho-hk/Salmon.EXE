@@ -14,3 +14,11 @@ body {
   width: 50%;     /* Must have a set width */
   margin: 0 auto; /* 0 top/bottom, auto left/right */
 }
+
+.sidebar-frame {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  z-index: 10;
+}
