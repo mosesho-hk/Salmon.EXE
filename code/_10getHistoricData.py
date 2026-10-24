@@ -13,6 +13,7 @@ def getHistoricData(requestedDataType):
         for priceRow in worksheet:
             price = priceRow[3].value
             if price != None:
+                price *= 0.08
                 priceList.append(price)
             else:
                 pass
