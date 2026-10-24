@@ -7,16 +7,18 @@ def getHistoricData(requestedDataType):
     worksheet = workbook["Vekt"]
 
 
-    # return the list of prices
+    # return the list of prices in GBP, converted from NOK. Screw you, Norwegian Krone.
     if requestedDataType == "price":
         priceList = []
         for priceRow in worksheet:
             price = priceRow[3].value
-            if price != None:
-                price *= 0.08
-                priceList.append(price)
-            else:
+            if price == None:
                 pass
+            elif price == "Price per kg (NOK)":
+                pass
+            else:
+                price *= 0.08
+                priceList.append("%.2f" % price)
 
         return priceList
 

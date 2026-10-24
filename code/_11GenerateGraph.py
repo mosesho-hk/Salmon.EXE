@@ -8,7 +8,10 @@ def generatePriceGraph():
     yAxisData = _10getHistoricData.getHistoricData("price")
     ax.plot(xAxisData, yAxisData)
     ax.set(xlabel = "Time (Year)", ylabel = "Price per kilogram (GBP, converted from NOK as of 24/10/2026)")
+    ax.grid()
+    fig.savefig("PriceGraph.png")
 
+    pyplot.show()
 
+generatePriceGraph()
 
-print(_10getHistoricData.getHistoricData("price"))
