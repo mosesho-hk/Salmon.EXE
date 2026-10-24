@@ -13,18 +13,8 @@ def optimize_purchasing_schedule(
 ):
     """
     Optimizes purchasing schedule under deterministic budget and quantity constraints.
-    
-    Args:
-        maximum_budget (float): Hard spending ceiling (maximum_budget)[cite: 1].
-        buyer_demand_kg (float): Total target quantity required (buyer_demand_kg)[cite: 1].
-        deadline_days (int): Number of time steps (days by default, weeks for weekly inputs).
-        supplier_offer_price_kg (list): Predicted unit price per day (supplier_offer_price_kg)[cite: 1].
-        supplier_saleable_stock_kg (list): Max available volume per day (supplier_saleable_stock_kg)[cite: 1].
-        period_labels (list | None): Optional labels for the input time steps, e.g. forecast dates.
-        
-    Returns:
-        list of tuples: [(when_to_buy, budget_allocated, quantity), ...]
     """
+    
     if isinstance(deadline_days, bool) or not isinstance(deadline_days, int):
         raise ValueError("The deadline must be a positive integer number of time steps.")
     if deadline_days < 1 or deadline_days > min(len(supplier_offer_price_kg), len(supplier_saleable_stock_kg)):
@@ -120,8 +110,8 @@ def optimize_purchasing_schedule(
 # --- Example Execution ---
 if __name__ == "__main__":
     # Define inputs matching your schema specifications
-    maximum_budget = 1400.0               # £1,400 max budget[cite: 1]
-    buyer_demand_kg = 100.0              # 100 kg required[cite: 1]
+    maximum_budget = 1400.0               # £1,400 max budget
+    buyer_demand_kg = 100.0              # 100 kg required
     deadline_days = 5                     # 5-day deadline window
     
     # Daily parameters across the 5-day horizon
