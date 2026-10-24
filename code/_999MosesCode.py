@@ -48,5 +48,5 @@ plt.title("Frozen farmed salmon — weekly export volume")
 plt.xlabel("Week")
 plt.ylabel("Tonnes")
 plt.grid(alpha=0.3)
-#plt.show()
+plt.show()
 
