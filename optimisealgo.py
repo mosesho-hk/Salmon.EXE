@@ -5,7 +5,9 @@ def optimize_purchasing_schedule(
     buyer_demand_kg: float, 
     deadline_days: int, 
     supplier_offer_price_kg: list, 
-    supplier_saleable_stock_kg: list
+    supplier_saleable_stock_kg: list,
+    *,
+    period_labels: list | None = None,
 ):
     """
     Optimizes purchasing schedule under deterministic budget and quantity constraints.
@@ -13,13 +15,18 @@ def optimize_purchasing_schedule(
     Args:
         maximum_budget (float): Hard spending ceiling (maximum_budget)[cite: 1].
         buyer_demand_kg (float): Total target quantity required (buyer_demand_kg)[cite: 1].
-        deadline_days (int): Time horizon / deadline limit.
+        deadline_days (int): Number of time steps (days by default, weeks for weekly inputs).
         supplier_offer_price_kg (list): Predicted unit price per day (supplier_offer_price_kg)[cite: 1].
         supplier_saleable_stock_kg (list): Max available volume per day (supplier_saleable_stock_kg)[cite: 1].
+        period_labels (list | None): Optional labels for the input time steps, e.g. forecast dates.
         
     Returns:
         list of tuples: [(when_to_buy, budget_allocated, quantity), ...]
     """
+    if deadline_days < 1 or deadline_days > min(len(supplier_offer_price_kg), len(supplier_saleable_stock_kg)):
+        raise ValueError("The deadline must fit within the supplied price and stock data.")
+    if period_labels is not None and len(period_labels) < deadline_days:
+        raise ValueError("A label is required for every time step within the deadline.")
     # Slice the horizon to match the deadline window
     prices = supplier_offer_price_kg[:deadline_days]
     stocks = supplier_saleable_stock_kg[:deadline_days]
@@ -61,7 +68,7 @@ def optimize_purchasing_schedule(
             qty = x[t].varValue
             if qty > 1e-5:  # Filter out near-zero floating-point allocations
                 budget_allocated = qty * prices[t]
-                when_to_buy = f"Day {t+1}"
+                when_to_buy = period_labels[t] if period_labels is not None else f"Day {t+1}"
                 schedule.append((when_to_buy, round(budget_allocated, 2), round(qty, 2)))
         return schedule
     else:
