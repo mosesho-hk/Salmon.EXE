@@ -5,13 +5,15 @@ def getForecastData(requestedDataType):
     forecastDataFile = "Salmon.EXE\Forecast.json"
     with open(forecastDataFile, "r") as forecastDataRaw:
         forecastData = json.load(forecastDataRaw)
+    
 
     if requestedDataType == "price":
         forecastPriceToReturn = []
         for forecastPrice in forecastData:
-            forecastPrice["Fprice"] *= 0.08
-            forecastPriceToReturn.append("%.2f" % forecastPrice)
-
+                forecastPriceUnpacked = forecastPrice["Fprice"]
+                forecastPriceUnpacked *= 0.08
+                forecastPriceToReturn.append("%.2f" % forecastPriceUnpacked)
+                
         return forecastPriceToReturn
 
 
