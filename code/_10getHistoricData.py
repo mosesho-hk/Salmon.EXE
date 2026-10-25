@@ -40,11 +40,12 @@ def getHistoricData(requestedDataType):
         quantityList = []
         for quantityRow in worksheet:
             quantity = quantityRow[2].value
-            if quantity != None:
+            if quantity == "Weight (tonnes)":
+                pass
+            elif quantity != None:
                 quantityList.append(quantity)
             else:
                 pass
-        print(quantityList)
         
         return quantityList
 
