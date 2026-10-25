@@ -54,4 +54,6 @@ def generateQuantityGraph():
     pyplot.show()
 
 generatePriceGraph()
+generateQuantityGraph()
+
 

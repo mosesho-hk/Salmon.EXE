@@ -5,7 +5,7 @@ from datetime import date
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, ValidationError
 
@@ -104,5 +104,16 @@ def quantity_graph(start: date | None = None, end: date | None = None):
         raise HTTPException(422, f"Unable to load quantity graph: {error}") from error
 
 
-# Serve the existing frontend and API on the same origin. Expose only src/.
+@app.get("/data/{filename}")
+def graph_image(filename: str):
+    # Expose only the two chart images, not the source data directory.
+    if filename not in {"Figure_1.png", "Figure_2.png"}:
+        raise HTTPException(404, "Graph not found.")
+    path = ROOT / "data" / filename
+    if not path.is_file():
+        raise HTTPException(404, "Graph image has not been generated yet.")
+    return FileResponse(path, media_type="image/png")
+
+
+# Serve the existing frontend and API on the same origin.
 app.mount("/", StaticFiles(directory=ROOT / "src", html=True), name="frontend")

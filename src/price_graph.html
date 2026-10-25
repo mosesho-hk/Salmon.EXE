@@ -8,28 +8,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 </head>
 <body class="bg-body-tertiary" style="--bs-body-font-family: 'Montserrat', sans-serif; background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('salmon.png') center / cover no-repeat fixed;">
 <div class="container-fluid px-0"><div class="row g-0 min-vh-100">
-  <aside class="col-4 col-md-3 col-xl-2 sticky-top align-self-start vh-100 bg-body-tertiary"><iframe class="w-100 vh-100 border-0 d-block" src="side.html?active=quan_price.html" title="Sidebar navigation"></iframe></aside>
-  <main class="col-8 col-md-9 col-xl-10 p-3 p-lg-4">
+  <aside class="app-sidebar bg-body-tertiary"><iframe class="sidebar-frame w-100 border-0 d-block" src="side.html?active=price_graph.html" title="Sidebar navigation"></iframe></aside>
+  <main class="app-main p-3 p-lg-4">
     <div class="container-fluid px-0">
       <h1 class="h2 fw-bold mb-3">Price forecast</h1>
       <p class="mb-4 text-body-secondary">Explore historical salmon exports and the weekly price forecast in one graph.</p>
       <section class="card bg-white shadow-sm rounded-4 p-3 p-lg-4" aria-label="Historical and forecast price graph">
-        <p class="small text-body-secondary" id="chart-status" role="status" aria-live="polite">Loading price data…</p>
-        <div><div class="position-relative" id="chart" role="img" aria-label="Weekly historical and forecast salmon export prices"></div></div>
-        <div class="overflow-x-scroll overflow-y-hidden py-2 focus-ring" id="timeline" tabindex="0" role="region" aria-label="Scroll through price history" aria-describedby="timeline-help"><div class="py-1" id="timeline-track"></div></div>
-        <div class="d-flex justify-content-between small text-body-secondary mt-2"><span id="history-start"></span><span id="history-end"></span></div>
-          <summary class="fw-semibold py-2" id="forecast-summary">Weekly forecast values</summary>
-          <div class="table-responsive" tabindex="0" role="region" aria-label="Forecast values">
-            <table class="table table-striped table-hover caption-top small"><caption>Forecast export prices, by week starting Monday</caption><thead class="table-warning"><tr><th scope="col">Week starting</th><th scope="col">Price (USD/tonne)</th></tr></thead><tbody id="forecast-rows"></tbody></table>
-          </div>
-        </details>
+        <p class="small text-body-secondary">Black: historical data. Red: forecast. The shaded area marks the forecast period; it is not a confidence interval.</p>
+        <figure class="mb-0">
+          <a class="d-block" href="../data/Figure_1.png" target="_blank" rel="noopener" aria-label="Open price graph at full size in a new tab">
+            <img class="img-fluid w-100" src="../data/Figure_1.png" width="1539" height="600" alt="Historical salmon price and forecast through 2027. Historical salmon price and forecast in GBP per kilogram, converted from NOK as of 24 October 2026.">
+          </a>
+          <figcaption class="small text-body-secondary mt-3">Historical salmon price and forecast in GBP per kilogram, converted from NOK as of 24 October 2026.</figcaption>
+        </figure>
+        <a class="align-self-start mt-3" href="../data/Figure_1.png" target="_blank" rel="noopener">Open full-size graph (new tab)</a>
       </section>
     </div>
   </main>
 </div></div>
-<script src="price-graph.js" defer></script>
 </body>
 </html>
