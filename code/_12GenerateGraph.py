@@ -53,3 +53,5 @@ def generateQuantityGraph():
     fig.savefig("PriceGraph.png", bbox_inches = "tight")
     pyplot.show()
 
+generatePriceGraph()
+

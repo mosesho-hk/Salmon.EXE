@@ -2,7 +2,7 @@ from openpyxl import load_workbook      # module/library for dealing with spread
 
 def getHistoricData(requestedDataType):
     # get stuff from spreadsheet
-    dataSet = "Salmon.EXE\data\Salmon_data.xlsx"
+    dataSet = "data\Salmon_data.xlsx"
     workbook = load_workbook(dataSet)
     worksheet = workbook["Vekt"]
 

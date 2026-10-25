@@ -2,7 +2,7 @@ import json
 
 
 def getForecastData(requestedDataType):
-    forecastDataFile = "Salmon.EXE\Forecast.json"
+    forecastDataFile = "Forecast.json"
     with open(forecastDataFile, "r") as forecastDataRaw:
         forecastData = json.load(forecastDataRaw)
     
