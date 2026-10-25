@@ -83,7 +83,7 @@ async function generateRecommendation() {
       }
       rows.appendChild(row);
     }
-    document.getElementById("recommendation-total").textContent = `Total cost: NOK ${result.total_cost_nok.toFixed(2)}`;
+    document.getElementById("recommendation-total").textContent = `Total cost: GBP${result.total_cost_nok.toFixed(2)}`;
     document.getElementById("recommendation-note").textContent = result.simulated_supplier_data
       ? "Simulated supplier quotes and stock. Each row is a purchase allocation; delivery and storage costs are excluded." : "";
     status.textContent = "Recommendation calculated.";

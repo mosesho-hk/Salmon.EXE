@@ -7,6 +7,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from openpyxl import load_workbook
 from pydantic import BaseModel, Field, ValidationError
 
 from optimisation.optimise_algo import optimize_purchasing_schedule
@@ -102,6 +103,47 @@ def quantity_graph(start: date | None = None, end: date | None = None):
         return build_quantity_graph(ROOT, start, end)
     except (OSError, KeyError, TypeError, ValueError) as error:
         raise HTTPException(422, f"Unable to load quantity graph: {error}") from error
+
+
+@app.get("/api/interactive-graph-data")
+def interactive_graph_data():
+    try:
+        workbook = load_workbook(ROOT / "data" / "Salmon_data.xlsx", read_only=True, data_only=True)
+        try:
+            worksheet = workbook["Vekt"]
+            historical_dates = []
+            historical_prices = []
+            historical_quantities = []
+            for row in worksheet.iter_rows(min_row=4, values_only=True):
+                week_code, quantity, price = row[1], row[2], row[3]
+                if not isinstance(week_code, str) or "U" not in week_code:
+                    continue
+                year, week = (int(part) for part in week_code.split("U", 1))
+                week_date = date.fromisocalendar(year, week, 1)
+                historical_dates.append(week_date.isoformat())
+                historical_quantities.append(float(quantity))
+                historical_prices.append(round(float(price) * 0.08, 2))
+        finally:
+            workbook.close()
+
+        forecast_rows = json.loads((ROOT / "forecast.json").read_text(encoding="utf-8"))
+        forecasts = [ForecastWeek.model_validate(row) for row in forecast_rows]
+        if not historical_dates or not forecasts:
+            raise ValueError("Historical and forecast data must both contain observations.")
+        return {
+            "historical": {
+                "dates": historical_dates,
+                "price_gbp": historical_prices,
+                "quantity_tonnes": historical_quantities,
+            },
+            "forecast": {
+                "dates": [row.Fweek.isoformat() for row in forecasts],
+                "price_gbp": [round(row.Fprice * 0.08, 2) for row in forecasts],
+                "quantity_tonnes": [row.Fquantity for row in forecasts],
+            },
+        }
+    except (OSError, KeyError, TypeError, ValueError, ValidationError) as error:
+        raise HTTPException(503, f"Unable to load interactive graph data: {error}") from error
 
 
 @app.get("/data/{filename}")
